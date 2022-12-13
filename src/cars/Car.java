@@ -17,9 +17,9 @@ public class Car {
     private VEHICULE_TYPE vehiculeType;
     private ENGINE_TYPE engineType;
     private BigDecimal price;
-    private int regNumber;
+    private String regNumber;
 
-    public Car(UUID carId, String brand, COLOR color, VEHICULE_CATEGORY vehiculeCategory, VEHICULE_TYPE vehiculeType, BigDecimal price, int regNumber) {
+    public Car(UUID carId, String brand, COLOR color, VEHICULE_CATEGORY vehiculeCategory, VEHICULE_TYPE vehiculeType, BigDecimal price, String regNumber) {
         this.carId = carId;
         this.brand = brand;
         this.color = color;
@@ -28,7 +28,7 @@ public class Car {
         this.regNumber = regNumber;
     }
 
-    public Car(UUID carId, String brand, COLOR color, VEHICULE_CATEGORY vehiculeCategory, VEHICULE_TYPE vehiculeType, ENGINE_TYPE engineType, BigDecimal price, int regNumber) {
+    public Car(UUID carId, String brand, COLOR color, VEHICULE_CATEGORY vehiculeCategory, VEHICULE_TYPE vehiculeType, ENGINE_TYPE engineType, BigDecimal price, String regNumber) {
         this(carId, brand, color, vehiculeCategory, vehiculeType,  price, regNumber);
         this.vehiculeType = vehiculeType;
         this.engineType = engineType;
@@ -90,11 +90,11 @@ public class Car {
         this.price = price;
     }
 
-    public int getRegNumber() {
+    public String getRegNumber() {
         return regNumber;
     }
 
-    public void setRegNumber(int regNumber) {
+    public void setRegNumber(String regNumber) {
         this.regNumber = regNumber;
     }
 
