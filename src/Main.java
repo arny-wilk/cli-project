@@ -76,9 +76,9 @@ public class Main {
         }
     }
 
-    private static User[] instruction6() {
+    private static String instruction6() {
         System.out.println("View all users");
-        return UserDAO.getUsers();
+        return Arrays.toString(UserDAO.getUsers());
     }
 
     private static String instruction5() {

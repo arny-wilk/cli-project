@@ -2,10 +2,9 @@ package bookings;
 
 import cars.Car;
 import cars.CarDAO;
+import enums.Enum;
 
 import java.util.ArrayList;
-
-import static enums.Enum.VEHICULE_TYPE.ELECTRIC;
 
 public class BookingService {
     private static Book booking;
@@ -37,12 +36,15 @@ public class BookingService {
         return availableCars;
     }
 
-    public static Car[] getAvailableElectricCars() {
+    public static Car[] getAvailableElectricCars() throws NullPointerException {
         Car[] availableElectricCars = new Car[CAPACITY];
         for (Car car : CarDAO.getCars()) {
-            if (!booking.getBooking().containsKey(car) && car.getVehiculeType().equals(ELECTRIC)) {
-                availableElectricCars[nextIteration++] = car;
+            Enum.VEHICULE_TYPE vehiculeType = car.getVehiculeType();
+            if (booking.getBooking().containsKey(car)
+                    && !vehiculeType.equals(Enum.VEHICULE_TYPE.ELECTRIC)) {
+                return availableElectricCars;
             }
+            availableElectricCars[nextIteration++] = car;
         }
         return availableElectricCars;
     }
