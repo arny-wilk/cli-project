@@ -7,7 +7,9 @@ import users.User;
 import users.UserDAO;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -35,7 +37,17 @@ public class Main {
         cars.addCar(newCar);
 
         Book booking = new Book();
+        System.out.println(booking);
         BookingService bookingService = new BookingService(booking);
+
+        HashMap<String, Object> choice = new HashMap<>();
+        choice.put("1", instruction1(bookingService));
+        choice.put("2", instruction2(bookingService));
+        choice.put("3", instruction3(booking));
+        choice.put("4", instruction4(bookingService));
+        choice.put("5", instruction5());
+        choice.put("6", instruction6());
+
         Scanner scan = new Scanner(System.in);
         String instructions = """
                 1️⃣ - Book Car
@@ -49,68 +61,47 @@ public class Main {
         while (true) {
             System.out.println(instructions);
             String instruction = scan.nextLine();
-            if (instruction.equals("1")) {
-                instruction1(bookingService);
+            if (choice.containsKey(instruction)) {
+                System.out.println(choice.get(instruction));
             }
-            if (instruction.equals("2")) {
-                instruction2(bookingService);
-            }
-            if (instruction.equals("3")) {
-                instruction3(booking);
-            }
-            if (instruction.equals("4")) {
-                instruction4(bookingService);
-            }
-            if (instruction.equals("5")) {
-                instruction5();
-            }
-            if (instruction.equals("6")) {
-                instruction6();
-            }
-            if (instruction.equals("7")) {
+            else if (instruction.equals("7")) {
                 System.out.println("Are you sure you want to exit the CLI (y/n?");
                 String ans = scan.nextLine();
-                if (ans.equalsIgnoreCase("y")) {
-                    break;
-                } else {
+                if (!ans.equalsIgnoreCase("y")) {
                     System.out.println("Follow instructions :");
+                } else {
+                    break;
                 }
             }
         }
     }
 
-    private static void instruction6() {
+    private static User[] instruction6() {
         System.out.println("View all users");
-        System.out.println(Arrays.toString(UserDAO.getUsers()));
+        return UserDAO.getUsers();
     }
 
-    private static void instruction5() {
+    private static String instruction5() {
         System.out.println("View Available Electric Cars");
-        System.out.println(Arrays.toString(BookingService.getAvailableElectricCars()));
+        return Arrays.toString(BookingService.getAvailableElectricCars());
     }
 
-    private static void instruction4(BookingService bookingService) {
+    private static ArrayList<Car> instruction4(BookingService bookingService) {
         System.out.println("View Available Cars");
-        bookingService.getAvailableCars();
+        return bookingService.getAvailableCars();
     }
 
-    private static void instruction3(Book booking) {
+    private static HashMap<Car, User> instruction3(Book booking) {
         System.out.println("View All Bookings");
-        System.out.println(booking.getBooking());
+        return booking.getBooking();
     }
 
-    private static void instruction2(BookingService bookingService) {
+    private static ArrayList<Car> instruction2(BookingService bookingService) {
         System.out.println("View All User Booked Cars");
-        bookingService.getAllUsersBookCars();
+        return bookingService.getAllUsersBookCars();
     }
 
-    private static void instruction1(BookingService bookingService) {
-        System.out.println("Book Car");
-        User[] userBook = UserDAO.getUsers();
-        Car[] carBook = CarDAO.getCars();
-        bookingService.addBook(carBook, userBook);
-        System.out.printf("You successfully added a Car Reservation for the latest user: %s %s"
-                , userBook[userBook.length - 1].getFirstName()
-                , userBook[userBook.length - 1].getLastname());
+    private static String instruction1(BookingService bookingService) {
+        return "You successfully added a Car Reservation for the latest user";
     }
 }

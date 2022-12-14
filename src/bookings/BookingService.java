@@ -2,39 +2,39 @@ package bookings;
 
 import cars.Car;
 import cars.CarDAO;
-import users.User;
+
+import java.util.ArrayList;
 
 import static enums.Enum.VEHICULE_TYPE.ELECTRIC;
 
 public class BookingService {
-
     private static Book booking;
     private static final int CAPACITY = 10;
     private static int nextIteration = 0;
-
 
     public BookingService(Book booking) {
         BookingService.booking = booking;
     }
 
-    public void addBook(Car[] car, User[] user) {
-        booking.put(car[car.length - 1], user[user.length - 1]);
-    }
 
-    public void getAllUsersBookCars() {
+    public ArrayList<Car> getAllUsersBookCars() {
+        ArrayList<Car> usersCars = new ArrayList<>();
         for (Car car : CarDAO.getCars()) {
             if (booking.getBooking().containsKey(car)) {
-                System.out.println(car);
+                usersCars.add(car);
             }
         }
+        return usersCars;
     }
 
-    public void getAvailableCars() {
+    public ArrayList<Car> getAvailableCars() {
+        ArrayList<Car> availableCars = new ArrayList<>();
         for (Car car : CarDAO.getCars()) {
             if (!booking.getBooking().containsKey(car)) {
-                System.out.println(car);
+                availableCars.add(car);
             }
         }
+        return availableCars;
     }
 
     public static Car[] getAvailableElectricCars() {

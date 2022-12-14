@@ -21,7 +21,7 @@ public class UserDAO {
                             , "jamesfernandez@gmail.com");
         users[1] = new User(UUID.fromString("5faf6845-98b0-4bdc-9259-b158fc5fccc5")
                             , "Jamila"
-                            , "Alaoui"
+                            , "Aluino"
                             , Enum.GENDER.FEMALE
                             , Enum.ADDRESS_TYPE.HOME
                             , "5th Winston Street"
