@@ -1,9 +1,9 @@
 package users;
 
-import enums.Enum;
-
 import java.util.Objects;
 import java.util.UUID;
+
+import enums.Enum;
 
 public class User {
     private UUID userId;
@@ -14,6 +14,8 @@ public class User {
     private String address;
     private Enum.COUNTRY country;
     private String email;
+
+    public User() {}
 
     public User(UUID userId, String firstName, String lastname, Enum.GENDER gender, Enum.ADDRESS_TYPE addressType, String address, Enum.COUNTRY country, String email) {
         this.userId = userId;
@@ -26,7 +28,7 @@ public class User {
         this.email = email;
     }
 
-    public UUID getUserId() {
+    public UUID getUserId(UUID id) {
         return userId;
     }
 

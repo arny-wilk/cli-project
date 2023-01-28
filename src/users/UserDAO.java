@@ -1,10 +1,11 @@
 package users;
 
-import enums.Enum;
-
 import java.util.UUID;
 
+import enums.Enum;
+
 public class UserDAO {
+
     private static User[] users;
     private static int nextUser = 1;
 
@@ -28,6 +29,8 @@ public class UserDAO {
                             , Enum.COUNTRY.ENGLAND
                             , "jamilalaoui@gmail.com");
     }
+
+    public UserDAO() {}
 
     public static User[] getUsers() {
         return users;

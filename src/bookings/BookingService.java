@@ -17,8 +17,8 @@ public class BookingService {
         BookingService.booking = booking;
     }
 
-    public void addBook(Car[] car, User[] user) {
-        booking.put(car[car.length - 1], user[user.length - 1]);
+    public void addBook(Car car, User user) {
+        booking.put(car, user);
     }
 
     public void getAllUsersBookCars() {
@@ -40,8 +40,13 @@ public class BookingService {
     public static Car[] getAvailableElectricCars() {
         Car[] availableElectricCars = new Car[CAPACITY];
         for (Car car : CarDAO.getCars()) {
-            if (!booking.getBooking().containsKey(car) && car.getVehiculeType().equals(ELECTRIC)) {
-                availableElectricCars[nextIteration++] = car;
+            try {
+                if (!booking.getBooking().containsKey(car) && car.getVehiculeType().equals(ELECTRIC)) {
+                    availableElectricCars[nextIteration++] = car;
+                }
+                
+            } catch (Exception e) {
+                e.getMessage();
             }
         }
         return availableElectricCars;

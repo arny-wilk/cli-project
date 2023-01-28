@@ -18,7 +18,7 @@ public class Book {
         Car[] carInit = CarDAO.getCars();
         User[] userInit = UserDAO.getUsers();
         booking.put(carInit[0], userInit[0]);
-        booking.put(carInit[1], userInit[1]);
+        // booking.put(carInit[1], userInit[1]);
     }
 
     public Book() {
