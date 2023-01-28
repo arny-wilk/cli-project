@@ -19,18 +19,19 @@ public class Car {
     private BigDecimal price;
     private String regNumber;
 
+
     public Car(UUID carId, String brand, COLOR color, VEHICULE_CATEGORY vehiculeCategory, VEHICULE_TYPE vehiculeType, BigDecimal price, String regNumber) {
         this.carId = carId;
         this.brand = brand;
         this.color = color;
         this.vehiculeCategory = vehiculeCategory;
+        this.vehiculeType = vehiculeType;
         this.price = price;
         this.regNumber = regNumber;
     }
 
     public Car(UUID carId, String brand, COLOR color, VEHICULE_CATEGORY vehiculeCategory, VEHICULE_TYPE vehiculeType, ENGINE_TYPE engineType, BigDecimal price, String regNumber) {
         this(carId, brand, color, vehiculeCategory, vehiculeType,  price, regNumber);
-        this.vehiculeType = vehiculeType;
         this.engineType = engineType;
     }
 

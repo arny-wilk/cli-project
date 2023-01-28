@@ -1,7 +1,6 @@
 package cars;
 
-import static enums.Enum.ISO_ALPHA2;
-import static enums.Enum.VEHICULE_TYPE.ELECTRIC;
+import enums.Enum.ISO_ALPHA2;
 
 public class CarService {
     static boolean regNumberValidator(Car car) {
