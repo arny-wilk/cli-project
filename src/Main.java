@@ -4,21 +4,18 @@ import java.util.Scanner;
 import java.util.UUID;
 
 import bookings.Book;
+import bookings.BookArrayAccessService;
 import bookings.BookingService;
 import cars.Car;
-import cars.CarDAO;
+import cars.CarArrayDataAccessService;
 import users.User;
-import users.UserDAO;
+import users.UserArrayDataAccessService;
 
 public class Main {
     public static void main(String[] args) {
 
-        UserDAO users = new UserDAO();
-        CarDAO cars = new CarDAO();
-
-        System.out.println(Arrays.toString(UserDAO.getUsers()));
-        System.out.println();
-        System.out.println(Arrays.toString(CarDAO.getCars()));
+        UserArrayDataAccessService users = new UserArrayDataAccessService();
+        CarArrayDataAccessService cars = new CarArrayDataAccessService();
 
         // User newUser = new User("cd65a1a1-c254-4591-99c9-510c425f6889"
         // , "John"
@@ -38,7 +35,7 @@ public class Main {
         // , "GB4565 HAV");
         // cars.addCar(newCar);
 
-        Book booking = new Book();
+        BookArrayAccessService booking = new BookArrayAccessService();
         BookingService bookingService = new BookingService(booking);
         try (Scanner scan = new Scanner(System.in)) {
             String instructions = """
@@ -57,19 +54,19 @@ public class Main {
                     instruction1(booking, bookingService, users, cars);
                 }
                 if (instruction.equals("2")) {
-                    instruction2(bookingService);
+                    instruction2(bookingService, cars);
                 }
                 if (instruction.equals("3")) {
                     instruction3(booking);
                 }
                 if (instruction.equals("4")) {
-                    instruction4(bookingService);
+                    instruction4(bookingService, cars);
                 }
                 if (instruction.equals("5")) {
-                    instruction5();
+                    instruction5(cars);
                 }
                 if (instruction.equals("6")) {
-                    instruction6();
+                    instruction6(users);
                 }
                 if (instruction.equals("7")) {
                     System.out.println("Are you sure you want to exit the CLI (y/n?");
@@ -84,19 +81,19 @@ public class Main {
         }
     }
 
-    private static void instruction6() {
+    private static void instruction6(UserArrayDataAccessService users) {
         System.out.println("View all users");
-        System.out.println(Arrays.toString(UserDAO.getUsers()));
+        System.out.println(Arrays.toString(users.getUsers()));
     }
 
-    private static void instruction5() {
+    private static void instruction5(CarArrayDataAccessService cars) {
         System.out.println("View Available Electric Cars");
-        System.out.println(Arrays.toString(BookingService.getAvailableElectricCars()));
+        System.out.println(Arrays.toString(BookingService.getAvailableElectricCars(cars)));
     }
 
-    private static void instruction4(BookingService bookingService) {
+    private static void instruction4(BookingService bookingService, CarArrayDataAccessService cars) {
         System.out.println("View Available Cars");
-        bookingService.getAvailableCars();
+        bookingService.getAvailableCars(cars);
     }
 
     private static void instruction3(Book booking) {
@@ -104,12 +101,12 @@ public class Main {
         System.out.println(booking.getBooking());
     }
 
-    private static void instruction2(BookingService bookingService) {
+    private static void instruction2(BookingService bookingService, CarArrayDataAccessService cars) {
         System.out.println("View All User Booked Cars");
-        bookingService.getAllUsersBookCars();
+        bookingService.getAllUsersBookCars(cars);
     }
 
-    private static void instruction1(Book booking, BookingService bookingService, UserDAO users, CarDAO cars) {
+    private static void instruction1(Book booking, BookingService bookingService, UserArrayDataAccessService users, CarArrayDataAccessService cars) {
         System.out.println("Book Car");
         ArrayList<User> userRegister = new ArrayList<>();
 
