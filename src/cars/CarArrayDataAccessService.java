@@ -6,8 +6,8 @@ import java.util.UUID;
 import enums.Enum;
 
 public class CarArrayDataAccessService implements CarDAO {
-    private static final Car[] cars;
-    private static int nextAvailableSlot = 1;
+    private static Car[] cars;
+    private int nextAvailableSlot = 1;
 
     static {
         int arraySize = 10;
@@ -32,6 +32,4 @@ public class CarArrayDataAccessService implements CarDAO {
             }
         }
     }
-
-    
 }

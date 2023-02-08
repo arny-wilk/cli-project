@@ -15,9 +15,11 @@ public class User {
     private Enum.COUNTRY country;
     private String email;
 
-    public User() {}
+    public User() {
+    }
 
-    public User(UUID userId, String firstName, String lastname, Enum.GENDER gender, Enum.ADDRESS_TYPE addressType, String address, Enum.COUNTRY country, String email) {
+    public User(UUID userId, String firstName, String lastname, Enum.GENDER gender, Enum.ADDRESS_TYPE addressType,
+            String address, Enum.COUNTRY country, String email) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastname = lastname;
@@ -107,14 +109,61 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User user)) return false;
-        return Objects.equals(userId, user.userId) && Objects.equals(firstName, user.firstName) && Objects.equals(lastname, user.lastname) && gender == user.gender && addressType == user.addressType && Objects.equals(address, user.address) && country == user.country && Objects.equals(email, user.email);
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+        result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+        result = prime * result + ((addressType == null) ? 0 : addressType.hashCode());
+        result = prime * result + ((address == null) ? 0 : address.hashCode());
+        result = prime * result + ((country == null) ? 0 : country.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(userId, firstName, lastname, gender, addressType, address, country, email);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (userId == null) {
+            if (other.userId != null)
+                return false;
+        } else if (!userId.equals(other.userId))
+            return false;
+        if (firstName == null) {
+            if (other.firstName != null)
+                return false;
+        } else if (!firstName.equals(other.firstName))
+            return false;
+        if (lastname == null) {
+            if (other.lastname != null)
+                return false;
+        } else if (!lastname.equals(other.lastname))
+            return false;
+        if (gender != other.gender)
+            return false;
+        if (addressType != other.addressType)
+            return false;
+        if (address == null) {
+            if (other.address != null)
+                return false;
+        } else if (!address.equals(other.address))
+            return false;
+        if (country != other.country)
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        return true;
     }
+
 }
