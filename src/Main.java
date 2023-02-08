@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.UUID;
 
-import bookings.Book;
-import bookings.BookArrayAccessService;
+import bookings.BookHashMapAccessService;
 import bookings.BookingService;
+import bookings.HashTable;
 import cars.Car;
 import cars.CarArrayDataAccessService;
 import users.User;
@@ -16,27 +17,10 @@ public class Main {
 
         UserArrayDataAccessService users = new UserArrayDataAccessService();
         CarArrayDataAccessService cars = new CarArrayDataAccessService();
+        HashTable<Car, User> book = new HashTable<>();
+        BookingService bookingService = new BookingService();
+        BookHashMapAccessService bookDAS = new BookHashMapAccessService(book);
 
-        // User newUser = new User("cd65a1a1-c254-4591-99c9-510c425f6889"
-        // , "John"
-        // , "McGregor"
-        // , Enum.GENDER.valueOf("MALE")
-        // , Enum.ADDRESS_TYPE.BILLING
-        // , "8th LongWay"
-        // , Enum.COUNTRY.ENGLAND
-        // , "johnmcgregor@outlook.gb");
-        // users.addUser(newUser);
-        // Car newCar = new Car("eaa83297-2ab1-47f2-be9c-c573a2ac5d1a"
-        // , "Mercedes"
-        // , Enum.COLOR.GREY
-        // , Enum.VEHICULE_CATEGORY.SEDAN
-        // , Enum.VEHICULE_TYPE.THERMIC
-        // , BigDecimal.TEN
-        // , "GB4565 HAV");
-        // cars.addCar(newCar);
-
-        BookArrayAccessService booking = new BookArrayAccessService();
-        BookingService bookingService = new BookingService(booking);
         try (Scanner scan = new Scanner(System.in)) {
             String instructions = """
                     1️⃣ - Book Car
@@ -51,13 +35,13 @@ public class Main {
                 System.out.println(instructions);
                 String instruction = scan.nextLine();
                 if (instruction.equals("1")) {
-                    instruction1(booking, bookingService, users, cars);
+                    instruction1(users, cars, bookDAS);
                 }
                 if (instruction.equals("2")) {
                     instruction2(bookingService, cars);
                 }
                 if (instruction.equals("3")) {
-                    instruction3(booking);
+                    instruction3(bookDAS);
                 }
                 if (instruction.equals("4")) {
                     instruction4(bookingService, cars);
@@ -68,6 +52,7 @@ public class Main {
                 if (instruction.equals("6")) {
                     instruction6(users);
                 }
+
                 if (instruction.equals("7")) {
                     System.out.println("Are you sure you want to exit the CLI (y/n?");
                     String ans = scan.nextLine();
@@ -88,7 +73,7 @@ public class Main {
 
     private static void instruction5(CarArrayDataAccessService cars) {
         System.out.println("View Available Electric Cars");
-        System.out.println(Arrays.toString(BookingService.getAvailableElectricCars(cars)));
+        BookingService.getAvailableElectricCars(cars);
     }
 
     private static void instruction4(BookingService bookingService, CarArrayDataAccessService cars) {
@@ -96,9 +81,9 @@ public class Main {
         bookingService.getAvailableCars(cars);
     }
 
-    private static void instruction3(Book booking) {
+    private static void instruction3(BookHashMapAccessService bookDAS) {
         System.out.println("View All Bookings");
-        System.out.println(booking.getBooking());
+        System.out.println(bookDAS.getBooking());
     }
 
     private static void instruction2(BookingService bookingService, CarArrayDataAccessService cars) {
@@ -106,21 +91,22 @@ public class Main {
         bookingService.getAllUsersBookCars(cars);
     }
 
-    private static void instruction1(Book booking, BookingService bookingService, UserArrayDataAccessService users, CarArrayDataAccessService cars) {
+    private static void instruction1(UserArrayDataAccessService users, CarArrayDataAccessService cars, BookHashMapAccessService bookDAS) {
         System.out.println("Book Car");
         ArrayList<User> userRegister = new ArrayList<>();
 
         System.out.println(Arrays.toString(users.getUsers()));
-        Scanner inputId = new Scanner(System.in);
-        System.out.println("Choose a user ID : ");
-        UUID id = UUID.fromString(inputId.nextLine());
-        for (User user : users.getUsers()) {
-            try {
-                if (id.equals(user.getUserId(id))) {
-                    userRegister.add(user);
+        try (Scanner inputId = new Scanner(System.in)) {
+            System.out.println("Choose a user ID : ");
+            UUID id = UUID.fromString(inputId.nextLine());
+            for (User user : users.getUsers()) {
+                try {
+                    if (id.equals(user.getUserId(id))) {
+                        userRegister.add(user);
+                    }
+                } catch (Exception e) {
+                    e.getMessage();
                 }
-            } catch (Exception e) {
-                e.getMessage();
             }
         }
         System.out.println(userRegister);
@@ -128,20 +114,21 @@ public class Main {
         ArrayList<Car> carsRegList = new ArrayList<>();
 
         System.out.println(cars);
-        Scanner inputReg = new Scanner(System.in);
-        System.out.println("Choose a car Registration Number : ");
-        String reg = inputReg.nextLine();
-        for (Car car : cars.getCars()) {
-            try {
-                if (reg.equals(car.getRegNumber())) {
-                    carsRegList.add(car);
+        try (Scanner inputReg = new Scanner(System.in)) {
+            System.out.println("Choose a car Registration Number : ");
+            String reg = inputReg.nextLine();
+            for (Car car : cars.getCars()) {
+                try {
+                    if (reg.equals(car.getRegNumber())) {
+                        carsRegList.add(car);
+                    }
+                } catch (Exception e) {
+                    e.getMessage();
                 }
-            } catch (Exception e) {
-                e.getMessage();
             }
         }
         System.out.println(carsRegList);
-        bookingService.addBook(carsRegList.get(0), userRegister.get(0));
+        bookDAS.put(carsRegList.get(0), userRegister.get(0));
         System.out.println("You have successfully booked the user : " + userRegister.get(0).getFirstName() + " "
                 + userRegister.get(0).getLastname());
 

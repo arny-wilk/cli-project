@@ -1,12 +1,13 @@
 package users;
 
 import java.util.UUID;
+
 import enums.Enum;
 
 public class UserArrayDataAccessService implements UserDAO {
 
     private static final User[] users;
-    protected static int nextUser = 1;
+    private static int nextUser = 1;
 
     static {
         int arraySize = 10;
