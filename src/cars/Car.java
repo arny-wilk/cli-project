@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
+import enums.Enum.COLOR;
+import enums.Enum.ENGINE_TYPE;
+import enums.Enum.VEHICULE_TYPE;
+
 import static enums.Enum.COLOR;
 import static enums.Enum.VEHICULE_CATEGORY;
 import static enums.Enum.VEHICULE_TYPE;
@@ -19,7 +23,19 @@ public class Car {
     private BigDecimal price;
     private String regNumber;
 
-
+    public Car() {
+    }
+    
+    public Car(UUID carId, String brand, COLOR color, VEHICULE_TYPE vehiculeType, ENGINE_TYPE engineType,
+    String regNumber) {
+        this.carId = carId;
+        this.brand = brand;
+        this.color = color;
+        this.vehiculeType = vehiculeType;
+        this.engineType = engineType;
+        this.regNumber = regNumber;
+    }
+    
     public Car(UUID carId, String brand, COLOR color, VEHICULE_CATEGORY vehiculeCategory, VEHICULE_TYPE vehiculeType, BigDecimal price, String regNumber) {
         this.carId = carId;
         this.brand = brand;
@@ -30,12 +46,7 @@ public class Car {
         this.regNumber = regNumber;
     }
 
-    public Car(UUID carId, String brand, COLOR color, VEHICULE_CATEGORY vehiculeCategory, VEHICULE_TYPE vehiculeType, ENGINE_TYPE engineType, BigDecimal price, String regNumber) {
-        this(carId, brand, color, vehiculeCategory, vehiculeType,  price, regNumber);
-        this.engineType = engineType;
-    }
-
-    public UUID getCarId() {
+    public UUID getCarId(UUID carId) {
         return carId;
     }
 

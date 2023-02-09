@@ -1,11 +1,11 @@
 package users;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import enums.Enum;
 
 public class User {
-    private UUID idToMatch;
     private UUID userId;
     private String firstName;
     private String lastname;
@@ -30,13 +30,8 @@ public class User {
         this.email = email;
     }
 
-    public UUID getUserId(UUID userId) {
+    public UUID getUserId() {
         return userId;
-    }
-
-    public boolean isUserId(UUID idToMacth) {
-        this.idToMatch = idToMacth;
-        return idToMatch.equals(userId);
     }
 
     public void setUserId(UUID userId) {

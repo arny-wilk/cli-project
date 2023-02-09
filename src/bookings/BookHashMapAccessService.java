@@ -18,11 +18,11 @@ public class BookHashMapAccessService implements Book {
     static {
        User user1 = usersDAS.getUsers()[0]; 
        Car car1 = carsDAS.getCars()[0];
-       User user2 = usersDAS.getUsers()[1]; 
-       Car car2 = carsDAS.getCars()[1];
+    //    User user2 = usersDAS.getUsers()[1]; 
+    //    Car car2 = carsDAS.getCars()[1];
 
        book.put(car1, user1);
-       book.put(car2, user2);
+    //    book.put(car2, user2);
     }
 
     @Override
