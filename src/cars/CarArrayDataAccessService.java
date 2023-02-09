@@ -1,17 +1,18 @@
 package cars;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.UUID;
 
 import enums.Enum;
 
 public class CarArrayDataAccessService implements CarDAO {
-    private static Car[] cars;
-    private int nextAvailableSlot = 1;
+
+    private static final int SIZE = 10;
+    private static  Car[] cars = new Car[SIZE];
+    private int nextSlot = 1;
 
     static {
-        int arraySize = 10;
-        cars = new Car[arraySize];
         cars[0] = new Car(UUID.fromString("83f7ed51-760c-4645-9aff-274b19cc3f24"), "Audi", Enum.COLOR.RED,
                 Enum.VEHICULE_CATEGORY.HATCHBACK, Enum.VEHICULE_TYPE.THERMIC, Enum.ENGINE_TYPE.VTEN,
                 new BigDecimal("45888"), "GB21 SMT");
@@ -28,8 +29,19 @@ public class CarArrayDataAccessService implements CarDAO {
     public void addCar(Car newCar) {
         for (int i = 1; i < cars.length; i++) {
             if (CarService.regNumberValidator(newCar)) {
-                cars[nextAvailableSlot++] = newCar;
+                cars[nextSlot++] = newCar;
             }
         }
+    }
+
+    @Override
+    public Car updateCar(Car car) {
+        return car;
+    }
+
+    @Override
+    public void deleteCar(Car car) {
+        int indexOfUser = Arrays.binarySearch(cars, car);
+        cars[indexOfUser] = null;
     }
 }

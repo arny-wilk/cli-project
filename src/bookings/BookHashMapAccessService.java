@@ -1,34 +1,38 @@
 package bookings;
 
-import cars.Car;
 import cars.CarArrayDataAccessService;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import cars.Car;
 import users.User;
 import users.UserArrayDataAccessService;
 
 public class BookHashMapAccessService implements Book {
 
-    private HashTable<Car, User> bookTable;
-    private CarArrayDataAccessService cars = new CarArrayDataAccessService();
-    private UserArrayDataAccessService users = new UserArrayDataAccessService();
+    private static HashMap<Car, User> book = new HashMap<>();
+    private static UserArrayDataAccessService usersDAS = new UserArrayDataAccessService();
+    private static CarArrayDataAccessService carsDAS = new CarArrayDataAccessService();
+    
+    static {
+       User user1 = usersDAS.getUsers()[0]; 
+       Car car1 = carsDAS.getCars()[0];
+       User user2 = usersDAS.getUsers()[1]; 
+       Car car2 = carsDAS.getCars()[1];
 
-    public BookHashMapAccessService(HashTable<Car, User> bookTable) {
-        this.bookTable = bookTable;
-        // bookTable.put(cars.getCars()[0], users.getUsers()[0]);
-        bookTable.put(cars.getCars()[1], users.getUsers()[1]);
-    }
-
-    @Override
-    public HashTable<Car, User> getBooking() {
-        return bookTable;
-    }
-
-    @Override
-    public void put(Car car, User user) {
-        bookTable.put(car, user);
+       book.put(car1, user1);
+       book.put(car2, user2);
     }
 
     @Override
     public String toString() {
-        return "Book{" + ", booking=" + bookTable + '}';
+        return "Book{" + ", booking=" + book + '}';
     }
+
+    @Override
+    public HashMap<Car, User> getBooking() {
+        return book;
+    }
+
 }

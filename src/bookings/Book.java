@@ -1,9 +1,9 @@
 package bookings;
 
 import cars.Car;
+import java.util.HashMap;
 import users.User;
 
 public interface Book { 
-    HashTable<Car, User> getBooking();
-    void put(Car car, User user);
+    HashMap<Car, User> getBooking();
 }

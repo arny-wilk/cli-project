@@ -1,17 +1,17 @@
 package users;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import enums.Enum;
 
 public class UserArrayDataAccessService implements UserDAO {
 
-    private static final User[] users;
-    private static int nextUser = 1;
+    private static final int SIZE = 10;
+    private static User[] users = new User[SIZE]; 
+    private int nextSlot = 1;
 
     static {
-        int arraySize = 10;
-        users = new User[arraySize];
         users[0] = new User(UUID.fromString("cd8732f5-3b6a-418c-b11f-a3689bbb9b47")
                             , "James"
                             , "Fernandez"
@@ -29,7 +29,7 @@ public class UserArrayDataAccessService implements UserDAO {
                             , Enum.COUNTRY.ENGLAND
                             , "jamilalaoui@gmail.com");
     }
-    
+
     @Override
     public User[] getUsers() {
         return users;
@@ -39,8 +39,19 @@ public class UserArrayDataAccessService implements UserDAO {
     public void add(User user) {
         for (int i = 1; i < users.length; i++) {
             if (UserService.emailValidator(user)) {
-                users[nextUser++] = user;
+                users[nextSlot++] = user;
             }
         }
+    }
+
+    @Override
+    public User updateUser(User user) {
+        return user;
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        int indexOfUser = Arrays.binarySearch(users, user);
+        users[indexOfUser] = null;
     }
 }
