@@ -12,11 +12,11 @@ public class CliInstructions {
     BookingService bookingService = new BookingService();
 
     public void println() {
-        // System.out.println(Arrays.toString(users.getUsers()));
-        // System.out.println(Arrays.toString(cars.getCars()));
-        // System.out.println(bookDAS.getBooking());
-        // System.out.println(bookingService.getAllUsersBookCars());
-        // System.out.println(bookingService.getAvailableCars());
+        System.out.println(Arrays.toString(users.getUsers()));
+        System.out.println(Arrays.toString(cars.getCars()));
+        System.out.println(bookDAS.getBooking());
+        System.out.println(bookingService.getAllUsersBookCars());
+        System.out.println(bookingService.getAvailableCars());
         System.out.println(bookingService.getAvailableElectricCars());
     }
 
