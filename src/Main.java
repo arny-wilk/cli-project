@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) { 
         
-            CliInstructions commands = new CliInstructions();
+            Controller commands = new Controller();
 
             try (Scanner instruction = new Scanner(System.in)) {
                 String instructions = """

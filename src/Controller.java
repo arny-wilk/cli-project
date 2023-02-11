@@ -5,7 +5,7 @@ import bookings.BookingService;
 import cars.CarArrayDataAccessService;
 import users.UserArrayDataAccessService;
 
-public class CliInstructions {
+public class Controller {
     UserArrayDataAccessService users = new UserArrayDataAccessService();
     CarArrayDataAccessService cars = new CarArrayDataAccessService();
     BookHashMapAccessService bookDAS = new BookHashMapAccessService();
