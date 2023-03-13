@@ -1,11 +1,9 @@
 package bookings;
 
-import cars.CarArrayDataAccessService;
-
 import java.util.HashMap;
-import java.util.Map;
 
 import cars.Car;
+import cars.CarArrayDataAccessService;
 import users.User;
 import users.UserArrayDataAccessService;
 

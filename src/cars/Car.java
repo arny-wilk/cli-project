@@ -4,10 +4,6 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
-import enums.Enum.COLOR;
-import enums.Enum.ENGINE_TYPE;
-import enums.Enum.VEHICULE_TYPE;
-
 import static enums.Enum.COLOR;
 import static enums.Enum.VEHICULE_CATEGORY;
 import static enums.Enum.VEHICULE_TYPE;

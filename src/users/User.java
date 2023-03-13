@@ -1,11 +1,11 @@
 package users;
 
-import java.util.Optional;
+import java.io.Serializable;
 import java.util.UUID;
 
 import enums.Enum;
 
-public class User {
+public class User implements Serializable {
     private UUID userId;
     private String firstName;
     private String lastname;
