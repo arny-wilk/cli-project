@@ -18,6 +18,7 @@ public class Car {
     private ENGINE_TYPE engineType;
     private BigDecimal price;
     private String regNumber;
+    public String get;
 
     public Car() {
     }
@@ -42,7 +43,7 @@ public class Car {
         this.regNumber = regNumber;
     }
 
-    public UUID getCarId(UUID carId) {
+    public UUID getCarId() {
         return carId;
     }
 

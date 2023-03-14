@@ -1,16 +1,24 @@
 package cars;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import enums.Enum;
+import registertocsvfile.ConvertToStringArray;
+import registertocsvfile.RegisterDataToCSVFile;
 
-public class CarArrayDataAccessService implements CarDAO {
+public class CarArrayDataAccessService implements CarDAO, ConvertToStringArray {
 
     private static final int SIZE = 10;
-    private static  Car[] cars = new Car[SIZE];
+    private static Car[] cars = new Car[SIZE];
     private int nextSlot = 1;
+
+    // save Data to CSV File
+    RegisterDataToCSVFile saveToCSVFile = new RegisterDataToCSVFile("out/data/cars.csv");
 
     static {
         cars[0] = new Car(UUID.fromString("83f7ed51-760c-4645-9aff-274b19cc3f24"), "Audi", Enum.COLOR.RED,
@@ -42,5 +50,33 @@ public class CarArrayDataAccessService implements CarDAO {
     public void deleteCar(Car car) {
         int indexOfUser = Arrays.binarySearch(cars, car);
         cars[indexOfUser] = null;
+    }
+
+    @Override
+    public List<String[]> convert() {
+        List<String[]> result = new ArrayList<>();
+        String[] header = { "CarId", "Model", "Color", "Category", "Type", "Price", "Registration Number" };
+        String[] emptyArray = { "", "", "", "", "", "", "" };
+        result.add(header);
+        List<Car> carList = Arrays.asList(cars);
+        for (Car car : carList) {
+            Optional<Car> optionalCar = Optional.ofNullable(car);
+            if (optionalCar.isPresent()) {
+                String[] stringify = { optionalCar.get().getCarId().toString(), optionalCar.get().getBrand(),
+                        optionalCar.get().getColor().toString(), optionalCar.get().getVehiculeCategory().toString(),
+                        optionalCar.get().getVehiculeType().toString(), optionalCar.get().getPrice().toString(),
+                        optionalCar.get().getRegNumber() };
+                result.add(stringify);
+            } else {
+                result.add(emptyArray);
+            }
+        }
+        return result;
+    }
+
+    public String registerCarsToCSVFile() {
+        List<String[]> stringArray = convert();
+        saveToCSVFile.writeToCsvFile(stringArray);
+        return "You successfully registered " + stringArray.size() + " cars";
     }
 }

@@ -1,47 +1,24 @@
 package registertocsvfile;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class RegisterDataToCSVFile implements ByteParser, ConverToList, CSVParserForArray {
+public class RegisterDataToCSVFile implements CSVParserForArray, Serializable {
 
     private String fileName;
 
+
     public RegisterDataToCSVFile(String fileName) {
         this.fileName = fileName;
-    }
-
-    @Override
-    public byte[] parseArrayToByteArray(Object[] array) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
-            objectOutputStream.writeObject(array);
-            objectOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return byteArrayOutputStream.toByteArray();
-    }
-
-    @Override
-    public String[] parseByteArrayToStringArray(byte[] array) {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(array);
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
-            return (String[]) objectInputStream.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-        return (String[]) Optional.empty().orElse(new String[0]);
     }
     
     @Override
@@ -55,25 +32,28 @@ public class RegisterDataToCSVFile implements ByteParser, ConverToList, CSVParse
     }
     
     @Override
-    public String convertToCSV(String[] object) {
-        return Stream.of(object)
+    public String convertToCSV(String[] stringArray) {
+        return Stream.of(stringArray)
                 .map(this::escapeSpecialCharacters)
                 .collect(Collectors.joining(","));
     }
 
     @Override
-    public void convertStringArrayToList(String[] stringArray) {
-        List<String[]> usersList = new ArrayList<>();
-        usersList.add(stringArray);
-    }
-
-    @Override
-    public void writeToCsvFile(List<String[]> list) {
-        try (FileWriter csvOutputFile = new FileWriter(fileName)) {
+    public void writeToCsvFile(List<String[]> arrayList) {
+        try (FileWriter csvOutputFile = new FileWriter(fileName);
             PrintWriter pw = new PrintWriter(csvOutputFile);
-            list.stream().map(this::convertToCSV).forEach(pw::println);
+        ) {
+            arrayList.stream().map(this::convertToCSV).forEach(pw::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

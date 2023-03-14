@@ -24,7 +24,7 @@ public class Main {
                     case "3" -> System.out.println(commands.bookDAS.getBooking());
                     case "4" -> System.out.println(commands.bookingService.getAvailableCars());
                     case "5" -> System.out.println(commands.bookingService.getAvailableElectricCars());
-                    case "6" -> System.out.println(Arrays.toString(commands.users.getUsers()));
+                    case "6" -> System.out.println(Arrays.toString(commands.usersArray.getUsers()));
                     default -> System.out.println("invalid command");
                 }
             }
