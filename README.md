@@ -1,4 +1,3 @@
-<img alt="Coding" width="400" src="https://i.pinimg.com/originals/9c/8c/db/9c8cdbb2bd7b637edd5b3a767b74153a.gif">
 # cli-project
 
 ### CLI project for the Java MasterClass with Amigoscode
