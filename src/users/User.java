@@ -1,6 +1,5 @@
 package users;
 
-import java.util.Objects;
 import java.util.UUID;
 
 import enums.Enum;
@@ -30,7 +29,7 @@ public class User {
         this.email = email;
     }
 
-    public UUID getUserId(UUID id) {
+    public UUID getUserId() {
         return userId;
     }
 
