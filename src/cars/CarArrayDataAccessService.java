@@ -62,10 +62,13 @@ public class CarArrayDataAccessService implements CarDAO, ConvertToStringArray {
         for (Car car : carList) {
             Optional<Car> optionalCar = Optional.ofNullable(car);
             if (optionalCar.isPresent()) {
-                String[] stringify = { optionalCar.get().getCarId().toString(), optionalCar.get().getBrand(),
-                        optionalCar.get().getColor().toString(), optionalCar.get().getVehiculeCategory().toString(),
-                        optionalCar.get().getVehiculeType().toString(), optionalCar.get().getPrice().toString(),
-                        optionalCar.get().getRegNumber() };
+                String[] stringify = { optionalCar.get().getCarId().toString()
+                                                , optionalCar.get().getBrand()
+                                                , optionalCar.get().getColor().toString()
+                                                , optionalCar.get().getVehiculeCategory().toString()
+                                                , optionalCar.get().getVehiculeType().toString()
+                                                , optionalCar.get().getPrice().toString()
+                                                , optionalCar.get().getRegNumber() };
                 result.add(stringify);
             } else {
                 result.add(emptyArray);

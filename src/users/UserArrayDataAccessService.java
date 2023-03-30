@@ -1,15 +1,10 @@
 package users;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import enums.Enum;
 import registertocsvfile.ConvertToStringArray;
@@ -20,7 +15,6 @@ public class UserArrayDataAccessService implements UserDAO, ConvertToStringArray
     private static final int SIZE = 10;
     private static User[] users = new User[SIZE];
     private int nextSlot = 1;
-    private int iteration = 0;
 
     // save to CSV File
     private RegisterDataToCSVFile saveToCSVFile = new RegisterDataToCSVFile("out/data/users.csv");
@@ -70,10 +64,15 @@ public class UserArrayDataAccessService implements UserDAO, ConvertToStringArray
         for (User user : listOfUsers) {
             Optional<User> optionalUser = Optional.ofNullable(user);
             if(optionalUser.isPresent()) {
-                String[] stringify = { optionalUser.get().getUserId().toString(), optionalUser.get().getFirstName(),
-                        optionalUser.get().getLastname(), optionalUser.get().getGender().toString(),
-                        optionalUser.get().getAddressType().toString(), optionalUser.get().getAddress(),
-                        optionalUser.get().getCountry().toString(), optionalUser.get().getEmail() };
+                String[] stringify = { optionalUser.get().getUserId().toString()
+                                                , optionalUser.get().getFirstName()
+                                                , optionalUser.get().getLastname()
+                                                , optionalUser.get().getGender().toString()
+                                                , optionalUser.get().getAddressType().toString()
+                                                , optionalUser.get().getAddress()
+                                                , optionalUser.get().getCountry().toString()
+                                                , optionalUser.get().getEmail()
+                                             };
 
                 result.add(stringify);
             } else {

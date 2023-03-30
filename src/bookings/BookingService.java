@@ -18,50 +18,37 @@ public class BookingService {
     static UserArrayDataAccessService usersDAS = new UserArrayDataAccessService();
     static CarArrayDataAccessService carsDAS = new CarArrayDataAccessService();
     static BookHashMapAccessService book = new BookHashMapAccessService();
-    
-    
+
     public void addBook() {
-        ArrayList<User> userRegister = new ArrayList<>();
-        System.out.println(Arrays.toString(usersDAS.getUsers()));
+        User selectedUser = new User();
         Scanner inputId = new Scanner(System.in);
         System.out.println("Choose a user ID : ");
-        UUID id = UUID.fromString(inputId.nextLine());
+        Optional<UUID> id = Optional.ofNullable(UUID.fromString(inputId.nextLine()));
         for (User user : usersDAS.getUsers()) {
-            try {
-                if (!id.equals(user.getUserId())) {
-                    Optional.empty();
-                } else {
-                    userRegister.add(user);
-                }
-            } catch (Exception e) {
-                Optional.of(e);
+            if (id.isPresent()) {
+                selectedUser = user;
+            } else {
+                Optional.empty();
             }
         }
-        System.out.println(userRegister);
-
-        ArrayList<Car> carsRegList = new ArrayList<>();
+        Car selectedCar = new Car();
         Scanner inputReg = new Scanner(System.in);
         System.out.println("Choose a car Registration Number : ");
-        String reg = inputReg.nextLine();
+        Optional<String> reg = Optional.ofNullable(inputReg.nextLine());
         for (Car car : carsDAS.getCars()) {
-                try {
-                    if (!reg.equals(car.getRegNumber())) {
-                        Optional.empty();
-                    } else {
-                        carsRegList.add(car);
-                    }
-                } catch (Exception e) {
-                    Optional.of(e);
-                }
+            if (reg.isPresent()) {
+                selectedCar = car;
+            } else {
+                Optional.empty();
+            }
         }
 
-        System.out.println(carsRegList);
-        book.getBooking().put(carsRegList.get(0), userRegister.get(0));
-        System.out.println("You have successfully booked the user : " + userRegister.get(0).getFirstName() + " "
-                + userRegister.get(0).getLastname());
+        book.getBooking().put(selectedCar, selectedUser);
+        System.out.println("You have successfully booked the user : " + selectedUser + " "
+                + selectedUser);
 
     }
-    
+
     public Optional<Car> getAllUsersBookCars() {
         for (Car car : carsDAS.getCars()) {
             if (book.getBooking().containsKey(car)) {
